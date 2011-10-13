@@ -20,6 +20,7 @@
 	var methods = {
 		init : function(options) {
 			var settings = {
+				event: 'blur',
 				success: function(value, cardType) {},
 				error: function(value, cardType, message) {}
 			};
@@ -29,25 +30,21 @@
 					$.extend(settings, options);
 				}
 				
-				$(this).bind('blur.creditCardValidator', function(){
+				$(this).bind(settings.event + '.creditCardValidator', function() {
 					var value = $(this).val().replace(/[\-\ ]+/g,'');
 					var cardType = CardType.INVALID;
-					// AMEX
-					if (value.match(/^3[47][0-9]{13}$/)) {
-						cardType = CardType.AMEX;
-					}
-					// VISA
-					else if (value.match(/^4[0-9]{15}$/)) {
-						cardType = CardType.VISA;
-					}
-					// MasterCard
-					else if (value.match(/^5[1-5][0-9]{14}$/)) {
-						cardType = CardType.MASTERCARD;
-					}
-					// card not accepted
-					else {
+					
+					$.each(cards, function(c, card){
+						$.each(card.patterns, function(p, pattern){
+							if (value.match(pattern)) {
+								cardType = card.type;
+							}
+						});
+					});
+					
+					if (cardType === CardType.INVALID) {
 						if ('function' === typeof settings.error) {
-							settings.error(value, cardType, "Invalid card type.");
+							settings.error(value, CardType.INVALID, "Invalid card type.");
 						}
 						return;
 					}
@@ -78,6 +75,29 @@
 		AMEX: "amex",
 		MASTERCARD: "mastercard"
 	}
+	
+	var cards = {
+		'amex': {
+			patterns: [
+				/^3[47][0-9]{13}$/
+			],
+			type: CardType.AMEX
+		},
+		'visa': {
+			patterns: [
+				/^4[0-9]{15}$/
+			],
+			type: CardType.VISA
+		},
+		'mastercard': {
+			patterns: [
+				/^5[1-5][0-9]{14}$/
+			],
+			type: CardType.MASTERCARD
+		}
+	};
+	
+	
 	
 	var luhn = function(input) {
 		var character,
