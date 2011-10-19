@@ -20,3 +20,7 @@ This plugin checks the given input field's content for a valid credit card numbe
 * ```event```: (String, Default ```blur```) Defines the event on which the validation is happening.
 * ```success```: (Function, Default ```function(cardNo, cardType)```) This function is executed if the validation is successful.
 * ```error```: (Function, Default ```function(cardNo, cardType, message)```) This function is executed if the validation fails.
+
+# License
+
+License: http://jr.mit-license.org
