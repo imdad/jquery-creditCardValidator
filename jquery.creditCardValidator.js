@@ -75,7 +75,7 @@
 		AMEX: "amex",
 		MASTERCARD: "mastercard"
 	}
-	
+	//For Patterns visit http://www.regular-expressions.info/creditcard.html
 	var cards = {
 		'amex': {
 			patterns: [
@@ -85,7 +85,7 @@
 		},
 		'visa': {
 			patterns: [
-				/^4[0-9]{15}$/
+				/^4[0-9]{12}(?:[0-9]{3})?$/
 			],
 			type: CardType.VISA
 		},
