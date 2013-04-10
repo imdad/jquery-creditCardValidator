@@ -73,9 +73,12 @@
 		INVALID: "invalid",
 		VISA: "visa",
 		AMEX: "amex",
-		MASTERCARD: "mastercard"
+		MASTERCARD: "mastercard",
+		DISCOVER : "discover",
+		DINNERSCLUB : "dinnersclub",
+		JCB : "jcb"
 	}
-	//For Patterns visit http://www.regular-expressions.info/creditcard.html
+	
 	var cards = {
 		'amex': {
 			patterns: [
@@ -94,6 +97,24 @@
 				/^5[1-5][0-9]{14}$/
 			],
 			type: CardType.MASTERCARD
+		},
+		"discover":{
+			patterns:[
+				/^6(?:011|5[0-9]{2})[0-9]{12}$/
+			],
+			type :CardType.DISCOVER 	
+		},
+		"dinnersclub":{
+			patterns:[
+				/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/
+			],
+			type :CardType.DINNERSCLUB 	
+		},
+		"jcb":{
+			patterns:[
+				/^(?:2131|1800|35\d{3})\d{11}$/
+			],
+			type :CardType.JCB 	
 		}
 	};
 	
